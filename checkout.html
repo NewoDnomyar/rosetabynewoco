@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #FFF0D7; /* Cream */
+            color: #333; /* Dark Gray */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+            background-color: #FFBED2; /* Pink */
+            color: #333; /* Dark Gray */
+            padding: 15px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar .nav-links a {
+            color: #333; /* Dark Gray */
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 18px;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #82B5FF; /* Blue */
+            border-bottom: 2px solid #82B5FF; /* Blue */
+        }
+
+        .checkout-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #FFF0D7; /* Cream */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .checkout-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #FFBED2; /* Pink */
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .field label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333; /* Dark Gray */
+        }
+
+        .field input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #82B5FF; /* Blue */
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #FFF0D7; /* Cream */
+            color: #333; /* Dark Gray */
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #82B5FF; /* Blue */
+            color: #FFF0D7; /* Cream */
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 18px;
+        }
+
+        .button:hover {
+            background-color: #FFBED2; /* Pink */
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            .checkout-container {
+                padding: 15px;
+            }
+
+            .navbar .nav-links a {
+                margin-left: 10px;
+                font-size: 16px;
+            }
+
+            .navbar .logo {
+                font-size: 20px;
+            }
+
+            .button {
+                font-size: 16px;
+            }
+        }
+    </style>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init('F3aEsyBhkvDJxHRZN'); // Replace with your actual EmailJS public key
+        })();
+    </script>
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID"></script> <!-- Replace YOUR_PAYPAL_CLIENT_ID with your PayPal client ID -->
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">Photo Collage Maker</div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="collage.html" class="nav-link">Create Collage</a>
+            <a href="checkout.html" class="nav-link">Checkout</a>
+        </div>
+    </div>
+
+    <div class="checkout-container">
+        <h1>Checkout</h1>
+        <form id="checkoutForm">
+            <div class="field">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="from_name" required autocomplete="name">
+            </div>
+            <div class="field">
+                <label for="address">Street Address:</label>
+                <input type="text" id="address" name="shipping_address" required autocomplete="address-line1">
+            </div>
+            <div class="field">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="user_city" required autocomplete="address-level2">
+            </div>
+            <div class="field">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="user_state" required autocomplete="address-level1">
+            </div>
+            <div class="field">
+                <label for="zip">ZIP Code:</label>
+                <input type="text" id="zip" name="user_zip" required autocomplete="postal-code">
+            </div>
+            <div class="field">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="customer_email" required autocomplete="email">
+            </div>
+            <div class="field">
+                <label for="collageCode">Collage Code (RSID):</label>
+                <input type="text" id="collageCode" name="collage_code" readonly required>
+            </div>
+            <p><strong>Total Price:</strong> $6.73</p>
+            <div id="paypal-button-container"></div>
+            <button id="testButton" class="button">Test Order (No Payment)</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve the RSID from localStorage
+            const rsidCode = localStorage.getItem('rsidCode');
+
+            // If an RSID exists, populate the Collage Code input field
+            if (rsidCode) {
+                const collageCodeInput = document.getElementById('collageCode');
+                collageCodeInput.value = rsidCode;
+            }
+
+            // EmailJS form submission
+            function sendEmail() {
+                const form = document.getElementById('checkoutForm');
+                emailjs.sendForm('service_z8blkjs', 'template_muokur4', form)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        alert('Your order has been placed and a confirmation email has been sent!');
+                    }, function(error) {
+                        console.log('FAILED...', error);
+                        alert('There was an error placing your order. Please try again.');
+                    });
+            }
+
+            // PayPal Buttons integration
+            if (typeof paypal !== 'undefined') {
+                paypal.Buttons({
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: '6.73' // Replace with the actual price
+                                }
+                            }]
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            alert('Transaction completed by ' + details.payer.name.given_name);
+                            sendEmail(); // Send the email after the PayPal payment is approved
+                        });
+                    }
+                }).render('#paypal-button-container'); // Display PayPal button
+            } else {
+                console.error("PayPal SDK not loaded.");
+            }
+
+            // For testing without PayPal payment
+            document.getElementById('testButton').addEventListener('click', function(event) {
+                event.preventDefault();
+                sendEmail(); // Test sending the email without PayPal payment
+                alert('Test order processed. No payment was made.');
+            });
+
+            // Automatically handle form submission when the form is directly submitted
+            checkoutForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                sendEmail(); // Ensure email is sent on form submission
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="library.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tile Library</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #FFF0D7; /* Cream */
+            color: #333; /* Dark Gray */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+            background-color: #FFBED2; /* Pink */
+            color: #333; /* Dark Gray */
+            padding: 15px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar .nav-links a {
+            color: #333; /* Dark Gray */
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 18px;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #82B5FF; /* Blue */
+            border-bottom: 2px solid #82B5FF; /* Blue */
+        }
+
+        #sortOptions {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px 0;
+        }
+
+        .tile-library {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tile-library img {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #FFBED2; /* Pink */
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">Photo Collage Maker</div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="collage.html" class="nav-link">Create Collage</a>
+            <a href="checkout.html" class="nav-link">Checkout</a>
+            <a href="library.html" class="nav-link">Library</a>
+        </div>
+    </div>
+
+    <select id="sortOptions">
+        <option value="" disabled selected>Sort by</option>
+        <option value="name">Name</option>
+        <option value="category">Category</option>
+        <!-- Add more sorting options if needed -->
+    </select>
+
+    <div class="tile-library" id="tileLibraryContainer">
+        <!-- Tiles will be displayed here -->
+    </div>
+
+    <script src="library.js"></script>
+</body>
+</html>

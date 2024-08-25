@@ -1,0 +1,178 @@
+/* Collage Maker Page Specific Styles */
+
+/* Sidebar styling */
+.sidebar {
+    background-color: #34495E; /* Dark Blue */
+    color: #ECF0F1; /* Light Gray */
+    padding: 20px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    position: fixed;
+    top: 60px; /* Below the navbar */
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.sidebar h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#tileSelector {
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    background-color: #FFF; /* White */
+    color: #34495E; /* Dark Blue */
+    border: 1px solid #BDC3C7; /* Light Gray */
+    border-radius: 6px;
+}
+
+#selectedTilesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    justify-content: center;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#selectedTilesContainer img {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    border-radius: 4px;
+    border: 1px solid #BDC3C7; /* Light Gray */
+}
+
+#rosetacodeID {
+    margin-bottom: 20px;
+    font-family: monospace;
+    background-color: #FFF; /* White */
+    padding: 10px;
+    border: 1px solid #BDC3C7; /* Light Gray */
+    width: 100%;
+    text-align: center;
+    color: #34495E; /* Dark Blue */
+    border-radius: 6px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.clear-button {
+    background-color: #E74C3C; /* Red */
+    color: #FFF; /* White */
+}
+
+.clear-button:hover {
+    background-color: #C0392B; /* Darker Red */
+}
+
+/* Main Content styling */
+.main-content {
+    margin-left: 270px; /* Space for the sidebar */
+    padding: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.main-content h1, .main-content h2 {
+    color: #34495E; /* Dark Blue */
+}
+
+.main-content h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.main-content h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+canvas {
+    border: 2px solid #BDC3C7; /* Light Gray */
+    background-color: #FFF; /* White */
+    border-radius: 6px;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+    padding: 15px 30px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background-color: #3498DB; /* Blue */
+    color: #ECF0F1; /* Light Gray */
+    text-align: center;
+    width: 100%;
+    max-width: 250px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button:hover {
+    background-color: #2980B9; /* Darker Blue */
+    transform: scale(1.05);
+}
+/* Navbar styling */
+.navbar {
+    background-color: #FFBED2; /* Pink */
+    color: #333; /* Dark Gray */
+    padding: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FFF0D7; /* Cream */
+}
+
+.navbar .nav-links a {
+    color: #333; /* Dark Gray */
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 18px;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+.navbar .nav-links a:hover {
+    color: #82B5FF; /* Blue */
+    border-bottom: 2px solid #82B5FF; /* Blue */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+        margin-bottom: 20px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .navbar {
+        position: relative;
+    }
+}
